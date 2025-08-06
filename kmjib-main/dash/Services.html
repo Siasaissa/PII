@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Services Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <meta name="description" content="Services management portal for tracking device payment system">
+    <meta name="keywords" content="services, management, tracking, payment">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Services Management">
+    <link rel="shortcut icon" href="board_files/favicon-01.svg">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <script src="/board_files/global/plugins.bundle.js"></script>
+    <link href="/board_files/plugins.bundle.css" rel="stylesheet" />
+    <link href="/board_files/style.bundle.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/vis-timeline.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="./board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/style.css" rel="stylesheet" type="text/css">
+    <link href="board_files/product.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="board_files/product.css" rel="stylesheet" type="text/css">
+    <link href="board_files/risknote.css" rel="stylesheet">
+    <style>
+        @media (min-width: 576px) {
+            .modal-md-custom {
+                max-width: 600px;
+            }
+        }
+            #toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1080;
+    }
+    .toast {
+      cursor: pointer;
+    }
+        @media (min-width: 576px) {
+            .modal-md-custom {
+                max-width: 600px;
+            }
+        }
+
+        #toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1060;
+        }
+
+        .custom-toast {
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid;
+        }
+
+        .toast-success {
+            border-left-color: #198754;
+        }
+
+        .toast-warning {
+            border-left-color: #ffc107;
+        }
+
+        .toast-danger {
+            border-left-color: #dc3545;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+
+        .toast-body {
+            font-size: 0.95rem;
+        }
+
+        .risk-header {
+            background-color: #dc3545;
+            border-radius: 0.5rem;
+        }
+
+        .section-icon {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-flush {
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #198754;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div id="toast-container"></div>
+    <div class="app-container container-xxl mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-10 col-12">
+                <div class="risk-header text-white p-4 mb-5">
+                    <div class="position-relative z-1">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap">
+                            <div class="mb-4 mb-md-0">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h1 class="h2 mb-0">
+                                        <i class="bi bi-gear fs-2 section-icon me-3"></i>
+                                        Services Management
+                                    </h1>
+                                </div>
+                                <div class="d-flex flex-wrap gap-4">
+                                    <div>
+                                        <small class="text-white-80 d-block">Total Services</small>
+                                        <div class="fw-semibold fs-5" id="totalServices">6</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Active Services</small>
+                                        <div class="fw-semibold fs-5" id="activeServices">4</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Inactive Services</small>
+                                        <div class="fw-semibold fs-5" id="inactiveServices">2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="text-end mb-3">
+                                    <small class="text-white-80 d-block">Last Updated</small>
+                                    <div class="fw-semibold" id="lastUpdated">Today</div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="index.html">
+                                        <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                            <i class="bi bi-house me-1"></i> Dashboard
+                                        </button>
+                                    </a>
+                                    <div class="card-toolbar ms-4 d-flex align-items-center gap-1">
+                                        <button class="btn btn-sm bg-danger text-white" data-bs-toggle="modal"
+                                            data-bs-target="#addServiceModal">
+                                            <i class="fas fa-plus text-white"></i> Add New Service
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Services Table -->
+                <div class="card card-flush">
+                    <div class="card-header pt-7">
+                        <h3 class="card-title">Tracking Device Services</h3>
+                    </div>
+                    <div class="card-body pt-6">
+                        <div class="table-responsive">
+                            <table class="table table-bodered align-items-center border-danger justify-content-start"
+                                style=".border-light-danger {border-color: #f8d7da !important; } font-family: Geneva !important; ">
+                                <thead>
+                                    <tr class="fs-5 fw-bold text-dark border-bottom-2 text-center">
+                                        <th>S/No</th>
+                                        <th>Service Name</th>
+                                        <th>Description</th>
+                                        <th>Price (TZS)</th>
+                                        <th>Billing Cycle</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="fs-6 text-center">
+                                        <td>01</td>
+                                        <td>Basic Tracking</td>
+                                        <td>Real-time location tracking with 1 hour updates</td>
+                                        <td>15,000.00</td>
+                                        <td>Monthly</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-6 text-center">
+                                        <td>02</td>
+                                        <td>Premium Tracking</td>
+                                        <td>Real-time tracking with 15 minute updates and geofencing</td>
+                                        <td>25,000.00</td>
+                                        <td>Monthly</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-6 text-center">
+                                        <td>03</td>
+                                        <td>Fleet Management</td>
+                                        <td>Multi-device tracking with driver behavior monitoring</td>
+                                        <td>50,000.00</td>
+                                        <td>Monthly</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-6 text-center">
+                                        <td>04</td>
+                                        <td>Asset Protection</td>
+                                        <td>Tamper alerts and movement notifications</td>
+                                        <td>20,000.00</td>
+                                        <td>Monthly</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-6 text-center">
+                                        <td>05</td>
+                                        <td>Historical Data</td>
+                                        <td>Access to 3 months of location history</td>
+                                        <td>10,000.00</td>
+                                        <td>Monthly</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-6 text-center">
+                                        <td>06</td>
+                                        <td>Extended History</td>
+                                        <td>Access to 12 months of location history</td>
+                                        <td>30,000.00</td>
+                                        <td>Annual</td>
+                                        <td>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-center gap-3 d-inline-block">
+                                            <i class="bi bi-eye fs-6 me-2 cursor-pointer text-success"
+                                                data-bs-toggle="modal" data-bs-target="#viewServiceModal"></i>
+                                            <i class="bi bi-pencil-square fs-6 me-2 ms-2 cursor-pointer"
+                                                style="color: orange !important;" data-bs-toggle="modal"
+                                                data-bs-target="#editServiceModal"></i>
+                                            <i class="bi bi-trash fs-6 text-danger ms-2 cursor-pointer"
+                                                style="color: #dc3545 !important;" data-bs-toggle="modal"
+                                                data-bs-target="#deleteServiceModal"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View Service Modal -->
+            <div class="modal fade" id="viewServiceModal" tabindex="-1" aria-labelledby="viewServiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-md-custom">
+                    <div class="modal-content">
+                        <div class="card card-flush">
+                            <div class="card-header pt-7">
+                                <div class="card-toolbar ms-4 d-flex align-items-center gap-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="w-100 text-center mb-2 text-success">
+                                    <h2>Service Details</h2>
+                                </div>
+                            </div>
+                            <div class="card-body pt-6">
+                                <div class="row align-items-start ms-4">
+                                    <div class="col-md-12">
+                                        <p><strong>Service Name:</strong> Premium Tracking</p>
+                                        <p><strong>Description:</strong> Real-time tracking with 15 minute updates and geofencing capabilities</p>
+                                        <p><strong>Price:</strong> 25,000.00 TZS</p>
+                                        <p><strong>Billing Cycle:</strong> Monthly</p>
+                                        <p><strong>Status:</strong> Active</p>
+                                        <p><strong>Created At:</strong> 15-Jan-2025</p>
+                                        <p><strong>Last Updated:</strong> 20-Mar-2025</p>
+                                        <p><strong>Features:</strong></p>
+                                        <ul>
+                                            <li>15-minute location updates</li>
+                                            <li>Geofencing alerts</li>
+                                            <li>Speed monitoring</li>
+                                            <li>24/7 support</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add Service Modal -->
+            <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="addServiceForm">
+                            <div class="modal-body row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Service Name</label>
+                                    <input type="text" class="form-control" placeholder="Enter service name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Price (TZS)</label>
+                                    <input type="number" class="form-control" placeholder="Enter price" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Billing Cycle</label>
+                                    <select class="form-select" required>
+                                        <option value="">Select billing cycle</option>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="annual">Annual</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" required>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter service description" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Features (comma separated)</label>
+                                    <textarea class="form-control" rows="2" placeholder="Feature 1, Feature 2, Feature 3"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary text-white">Add Service</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Edit Service Modal -->
+            <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="editServiceModalLabel">Edit Service</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="editServiceForm">
+                            <div class="modal-body row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Service Name</label>
+                                    <input type="text" class="form-control" value="Premium Tracking" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Price (TZS)</label>
+                                    <input type="number" class="form-control" value="25000" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Billing Cycle</label>
+                                    <select class="form-select" required>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly" selected>Monthly</option>
+                                        <option value="quarterly">Quarterly</option>
+                                        <option value="annual">Annual</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Status</label>
+                                    <select class="form-select" required>
+                                        <option value="active" selected>Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Description</label>
+                                    <textarea class="form-control" rows="3" required>Real-time tracking with 15 minute updates and geofencing capabilities</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Features (comma separated)</label>
+                                    <textarea class="form-control" rows="2">15-minute location updates, Geofencing alerts, Speed monitoring, 24/7 support</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary text-white">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Delete Service Modal -->
+            <div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title" id="deleteServiceModalLabel">Confirm Delete</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete the <strong>Premium Tracking</strong> service? This action cannot be undone.
+                            <div class="alert alert-warning mt-3">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                Deleting this service will affect all users currently subscribed to it.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="confirmDeleteService">Delete Service</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/scripts.bundle.js"></script>
+    <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
+    <script src="../assets/plugins/custom/vis-timeline/vis-timeline.bundle.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="../assets/js/widgets.bundle.js"></script>
+    <script src="../assets/js/custom/apps/chat/chat.js"></script>
+    <script src="../assets/js/custom/utilities/modals/create-campaign.js"></script>
+    <script src="../assets/js/custom/utilities/modals/users-search.js"></script>
+    <script src="../assets/plugins/global/plugins.bundle.js"></script>
+    <script src="../assets/plugins/custom/vis-timeline/vis-timeline.bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable
+            $('.table').DataTable({
+                "pageLength": 10
+            });
+            
+            // Update toggle switch counts
+            function updateServiceCounts() {
+                const total = $('tbody tr').length;
+                const active = $('tbody input[type="checkbox"]:checked').length;
+                const inactive = total - active;
+                
+                $('#totalServices').text(total);
+                $('#activeServices').text(active);
+                $('#inactiveServices').text(inactive);
+                
+                // Update last updated time
+                const now = new Date();
+                $('#lastUpdated').text(now.toLocaleTimeString());
+            }
+            
+            // Initial count
+            updateServiceCounts();
+            
+            // Toggle switch change handler
+            $('.toggle-switch input').change(function() {
+                const serviceName = $(this).closest('tr').find('td:eq(1)').text();
+                const isActive = $(this).is(':checked');
+                
+                showNotification(
+                    `Service "${serviceName}" has been ${isActive ? 'activated' : 'deactivated'}`,
+                    isActive ? 'success' : 'warning'
+                );
+                
+                updateServiceCounts();
+            });
+            
+            // Form submission handlers
+            $('#addServiceForm').on('submit', function (e) {
+                e.preventDefault();
+                $('#addServiceModal').modal('hide');
+                showNotification('New service has been added successfully', 'success');
+                // In a real app, you would add the new service to the table here
+                updateServiceCounts();
+            });
+            
+            $('#editServiceForm').on('submit', function (e) {
+                e.preventDefault();
+                $('#editServiceModal').modal('hide');
+                showNotification('Service has been updated successfully', 'success');
+            });
+            
+            $('#confirmDeleteService').on('click', function () {
+                $('#deleteServiceModal').modal('hide');
+                showNotification('Service has been deleted successfully', 'danger');
+                // In a real app, you would remove the service from the table here
+                updateServiceCounts();
+            });
+            
+            // Toast notification function
+            function showNotification(message, type) {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast show align-items-center custom-toast toast-${type} bg-light border-0`;
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+                
+                // Set icon based on type
+                let icon = 'bi-info-circle';
+                if (type === 'success') icon = 'bi-check-circle';
+                if (type === 'danger') icon = 'bi-trash';
+                if (type === 'warning') icon = 'bi-exclamation-triangle';
+                
+                toast.innerHTML = `
+                    <div class="d-flex align-items-center px-3 py-2">
+                        <i class="bi ${icon} toast-icon text-${type}"></i>
+                        <div class="toast-body">${message}</div>
+                        <button type="button" class="btn-close ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Initialize Bootstrap Toast
+                const bsToast = new bootstrap.Toast(toast, {
+                    autohide: true,
+                    delay: 3000
+                });
+                bsToast.show();
+                
+                // Remove toast after it's hidden
+                toast.addEventListener('hidden.bs.toast', () => {
+                    toast.remove();
+                });
+                
+                // Allow clicking to dismiss
+                toast.addEventListener('click', () => {
+                    bsToast.hide();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

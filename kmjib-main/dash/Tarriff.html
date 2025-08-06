@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tariff Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <meta name="description" content="Tariff Management System for tracking device payments">
+    <meta name="keywords" content="tariff, payment, management, tracking, device">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https:/.SURETECH Systems.co.tz/online-courses.html">
+    <link rel="shortcut icon" href="board_files/favicon-01.svg">
+    <link rel="canonical" href="https:/.SURETECH Systems.co.tz/list.html">
+    <link rel="shortcut icon" href="board_files/favicon--02-01.svg">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <script src="/board_files/global/plugins.bundle.js"></script>
+    <script src="/board_files/scripts.bundle.js"></script>
+    <link href="/board_files/plugins.bundle.css" rel="stylesheet" />
+    <link href="/board_files/style.bundle.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/vis-timeline.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="/board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./board_files/css7b91.css">
+    <link href="/board_files/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="./board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/style.bundle.css" rel="stylesheet" type="text/css">
+    <link href="./board_files/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="board_files/product.css" rel="stylesheet" type="text/css">
+    <link href="board_files/risknote.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @media (min-width: 576px) {
+            .modal-md-custom {
+                max-width: 600px;
+            }
+        }
+        
+        /* Toast styles */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            width: 350px;
+            max-width: 100%;
+            pointer-events: none;
+        }
+
+        .toast-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-toast {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+            pointer-events: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid;
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+            transform: translateX(0);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .custom-toast.hide {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .toast-success {
+            border-left-color: #198754;
+            background-color: #f8f9fa;
+        }
+
+        .toast-warning {
+            border-left-color: #ffc107;
+            background-color: #f8f9fa;
+        }
+
+        .toast-danger {
+            border-left-color: #dc3545;
+            background-color: #f8f9fa;
+        }
+
+        .toast-info {
+            border-left-color: #0dcaf0;
+            background-color: #f8f9fa;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+
+        .toast-body {
+            font-size: 0.95rem;
+            padding: 0.75rem;
+        }
+
+        
+        /* Custom table styles */
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .section-icon {
+            color: #2E3192;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div id="toast-container"></div>
+    <div class="app-container container-xxl mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-10 col-12">
+                <!--begin header-->
+                <div class="risk-header text-white p-4 mb-5">
+                    <div class="position-relative z-1">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap">
+                            <div class="mb-4 mb-md-0">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h1 class="h2 mb-0">
+                                        <i class="bi bi-wallet2 fs-2 section-icon me-3"></i>
+                                        Tariff Management
+                                    </h1>
+                                </div>
+                                <div class="d-flex flex-wrap gap-4">
+                                    <div>
+                                        <small class="text-white-80 d-block">Active Tariffs</small>
+                                        <div class="fw-semibold fs-5">12</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Monthly Revenue</small>
+                                        <div class="fw-semibold fs-5">TZS 8,450,000</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Active Subscriptions</small>
+                                        <div class="fw-semibold fs-5">215</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="text-end mb-3">
+                                    <small class="text-white-80 d-block">Last Updated</small>
+                                    <div class="fw-semibold">10-Nov-2023</div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="index.html">
+                                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                        <i class="bi bi-house me-1"></i> Dashboard
+                                    </button>
+                                    </a>
+                                    <div class="card-toolbar ms-4 d-flex align-items-center gap-1">                                       
+                                            <button class="btn btn-sm text-white" style="background-color: #2E3192;" data-bs-toggle="modal" data-bs-target="#addTariffModal">
+                                                <i class="fas fa-plus text-white"></i> Add Tariff
+                                            </button>
+                                    </div>
+                                    <div class="card-toolbar ms-4 d-flex align-items-center gap-1">                                       
+                                            <button class="btn btn-sm text-white" style="background-color: #2E3192;" id="exportReportBtn">
+                                                <i class="fas fa-download text-white"></i> Export
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end of header-->
+                <!--begin::Table widget 14-->
+                <div class="card card-flush">
+                    <!--begin::Header-->
+                    <div class="card-header pt-2">
+                         <div id="toast-container"></div>
+                    </div>
+
+                    <div class="card-body pt-6">
+                        <!--begin::Table container-->
+                        <div class="table-responsive">
+                            <!--begin::Table-->
+                            <table class="table table align-items-center border-warning" id="tariffsTable">
+                                <thead>
+                                    <tr class="fs-5 fw-bold text-dark border-bottom-2">
+                                        <th class="min-w-100px text-center">Tariff ID</th>
+                                        <th class="min-w-150px text-center">Tariff Name</th>
+                                        <th class="min-w-100px text-center">Device Type</th>
+                                        <th class="min-w-150px text-center">Billing Cycle</th>
+                                        <th class="min-w-100px text-center">Amount (TZS)</th>
+                                        <th class="min-w-150px text-center">Status</th>
+                                        <th class="min-w-150px text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="fs-4 border-bottom-2 justify-content-center">
+                                        <td class="text-gray-600 fs-6 text-center">TRF-0101</td>
+                                        <td class="text-gray-600 fs-6 text-center">Premium Vehicle Tracking</td>
+                                        <td class="text-gray-600 fs-6 text-center">Vehicle</td>
+                                        <td class="text-gray-600 fs-6 text-center">Monthly</td>
+                                        <td class="text-gray-600 fs-6 text-center">50,000</td>
+                                        <td class="fs-6 text-center">
+                                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+                                                <i class="bi bi-check-circle-fill me-1"></i> Active
+                                            </span>
+                                        </td>
+                                        <td class="text-center gap-3">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewTariffModal">
+                                                <i class="bi bi-eye"></i> View
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editTariffModal">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTariffModal">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-4 border-bottom-2 justify-content-center">
+                                        <td class="text-gray-600 fs-6 text-center">TRF-0102</td>
+                                        <td class="text-gray-600 fs-6 text-center">Basic Personal Tracker</td>
+                                        <td class="text-gray-600 fs-6 text-center">Personal</td>
+                                        <td class="text-gray-600 fs-6 text-center">Monthly</td>
+                                        <td class="text-gray-600 fs-6 text-center">25,000</td>
+                                        <td class="fs-6 text-center">
+                                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+                                                <i class="bi bi-check-circle-fill me-1"></i> Active
+                                            </span>
+                                        </td>
+                                        <td class="text-center gap-3">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewTariffModal">
+                                                <i class="bi bi-eye"></i> View
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editTariffModal">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTariffModal">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="fs-4 border-bottom-2 justify-content-center">
+                                        <td class="text-gray-600 fs-6 text-center">TRF-0103</td>
+                                        <td class="text-gray-600 fs-6 text-center">Asset Tracking Pro</td>
+                                        <td class="text-gray-600 fs-6 text-center">Asset</td>
+                                        <td class="text-gray-600 fs-6 text-center">Quarterly</td>
+                                        <td class="text-gray-600 fs-6 text-center">120,000</td>
+                                        <td class="fs-6 text-center">
+                                            <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2">
+                                                <i class="bi bi-exclamation-triangle-fill me-1"></i> Pending Approval
+                                            </span>
+                                        </td>
+                                        <td class="text-center gap-3">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewTariffModal">
+                                                <i class="bi bi-eye"></i> View
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editTariffModal">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTariffModal">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::Table container-->
+                    </div>
+                </div>
+                <!--end::Table widget 14-->
+            </div>
+        </div>
+    </div>
+
+    <!-- View Tariff Modal -->
+    <div class="modal fade" id="viewTariffModal" tabindex="-1" aria-labelledby="viewTariffModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #F9A61A ;">
+                    <h5 class="modal-title" id="viewTariffModalLabel">Tariff Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-currency-dollar" style="font-size: 5rem; color: #2E3192;"></i>
+                            </div>
+                            <h5>Premium Vehicle Tracking</h5>
+                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+                                <i class="bi bi-check-circle-fill me-1"></i> Active
+                            </span>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Tariff ID</label>
+                                    <p>TRF-0101</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Device Type</label>
+                                    <p>Vehicle Tracker</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Billing Cycle</label>
+                                    <p>Monthly</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Amount</label>
+                                    <p>TZS 50,000</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Tax Rate</label>
+                                    <p>18% VAT</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Created Date</label>
+                                    <p>20-Jun-2022</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold">Description</label>
+                                    <p>Premium tracking service for vehicles with real-time updates, geofencing, and advanced reporting features.</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Active Subscriptions</label>
+                                    <p>85</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Last Updated</label>
+                                    <p>15-Jan-2023</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="color: white;">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Tariff Modal -->
+    <div class="modal fade" id="editTariffModal" tabindex="-1" aria-labelledby="editTariffModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-white" style="background-color: #F9A61A ;">
+                    <h5 class="modal-title" id="editTariffModalLabel">Edit Tariff Information</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editTariffForm">
+                    <div class="modal-body row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tariff Name</label>
+                            <input type="text" class="form-control" value="Premium Vehicle Tracking" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Device Type</label>
+                            <select class="form-select" required>
+                                <option value="Vehicle" selected>Vehicle</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Asset">Asset</option>
+                                <option value="Fleet">Fleet</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Billing Cycle</label>
+                            <select class="form-select" required>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly" selected>Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="Annual">Annual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Amount (TZS)</label>
+                            <input type="number" class="form-control" value="50000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tax Rate</label>
+                            <select class="form-select" required>
+                                <option value="0">No Tax</option>
+                                <option value="18" selected>18% VAT</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" required>
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Pending">Pending Approval</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3">Premium tracking service for vehicles with real-time updates, geofencing, and advanced reporting features.</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="color: white;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Tariff Modal -->
+    <div class="modal fade" id="deleteTariffModal" tabindex="-1" aria-labelledby="deleteTariffModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteTariffModalLabel">Confirm Tariff Deletion</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete the tariff <strong>Premium Vehicle Tracking (TRF-0101)</strong>?</p>
+                    <p class="text-danger">This action will affect 85 active subscriptions and cannot be undone.</p>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="confirmDeleteCheckbox">
+                        <label class="form-check-label" for="confirmDeleteCheckbox">
+                            I understand this action is irreversible
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary bg-danger" style="color: white;" id="confirmDeleteTariffBtn" disabled>Delete Tariff</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Tariff Modal -->
+    <div class="modal fade" id="addTariffModal" tabindex="-1" aria-labelledby="addTariffModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header  text-white" style="background-color: #F9A61A;">
+                    <h5 class="modal-title" id="addTariffModalLabel">Add New Tariff</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addTariffForm">
+                    <div class="modal-body row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Tariff Name</label>
+                            <input type="text" class="form-control" placeholder="Enter tariff name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Device Type</label>
+                            <select class="form-select" required>
+                                <option value="" selected disabled>Select device type</option>
+                                <option value="Vehicle">Vehicle</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Asset">Asset</option>
+                                <option value="Fleet">Fleet</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Billing Cycle</label>
+                            <select class="form-select" required>
+                                <option value="" selected disabled>Select billing cycle</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Quarterly">Quarterly</option>
+                                <option value="Annual">Annual</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Amount (TZS)</label>
+                            <input type="number" class="form-control" placeholder="Enter amount" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tax Rate</label>
+                            <select class="form-select" required>
+                                <option value="0">No Tax</option>
+                                <option value="18" selected>18% VAT</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Initial Status</label>
+                            <select class="form-select" required>
+                                <option value="Active">Active</option>
+                                <option value="Pending" selected>Pending Approval</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3" placeholder="Enter tariff description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="color: white;">Add Tariff</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DataTable Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable
+            $('#tariffsTable').DataTable({
+                "pageLength": 10,
+                "responsive": true,
+                "language": {
+                    "search": "Search tariffs:",
+                    "lengthMenu": "Show _MENU_ tariffs per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ tariffs",
+                    "paginate": {
+                        "previous": "<i class='bi bi-chevron-left'></i>",
+                        "next": "<i class='bi bi-chevron-right'></i>"
+                    }
+                }
+            });
+            
+            // Enable delete button only when checkbox is checked
+            $('#confirmDeleteCheckbox').change(function() {
+                $('#confirmDeleteTariffBtn').prop('disabled', !$(this).is(':checked'));
+            });
+
+            // Form submission handlers
+            $('#editTariffForm').on('submit', function(e) {
+                e.preventDefault();
+                $('#editTariffModal').modal('hide');
+                showNotification('Tariff information updated successfully!', 'success');
+            });
+
+            $('#confirmDeleteTariffBtn').on('click', function() {
+                $('#deleteTariffModal').modal('hide');
+                showNotification('Tariff Premium Vehicle Tracking has been deleted.', 'danger');
+            });
+
+            $('#addTariffForm').on('submit', function(e) {
+                e.preventDefault();
+                $('#addTariffModal').modal('hide');
+                showNotification('New tariff added successfully!', 'success');
+                this.reset();
+            });
+            
+            $('#exportReportBtn').on('click', function() {
+                showNotification('Tariff report is being prepared for download...', 'info');
+                // Simulate report generation delay
+                setTimeout(() => {
+                    showNotification('Tariff report has been exported successfully!', 'success');
+                }, 2000);
+            });
+
+            // Toast notification function
+            function showNotification(message, type) {
+                const toastContainer = document.getElementById('toast-container');
+                
+                const toast = document.createElement('div');
+                toast.className = `toast show align-items-center custom-toast toast-${type} bg-light border-0`;
+                toast.setAttribute('role', 'alert');
+                toast.setAttribute('aria-live', 'assertive');
+                toast.setAttribute('aria-atomic', 'true');
+
+                // Set icon based on type
+                let icon = 'bi-info-circle';
+                let iconColor = 'text-info';
+                if (type === 'success') {
+                    icon = 'bi-check-circle';
+                    iconColor = 'text-success';
+                }
+                if (type === 'danger') {
+                    icon = 'bi-x-circle';
+                    iconColor = 'text-danger';
+                }
+                if (type === 'warning') {
+                    icon = 'bi-exclamation-triangle';
+                    iconColor = 'text-warning';
+                }
+
+                toast.innerHTML = `
+                    <div class="d-flex align-items-center px-3 py-2">
+                        <i class="bi ${icon} toast-icon ${iconColor}"></i>
+                        <div class="toast-body">${message}</div>
+                        <button type="button" class="btn-close ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                `;
+
+                toastContainer.appendChild(toast);
+
+                // Initialize Bootstrap Toast
+                const bsToast = new bootstrap.Toast(toast, {
+                    autohide: true,
+                    delay: 5000
+                });
+                bsToast.show();
+
+                // Remove toast after it's hidden
+                toast.addEventListener('hidden.bs.toast', () => {
+                    toast.remove();
+                });
+
+                // Allow clicking to dismiss
+                toast.addEventListener('click', () => {
+                    bsToast.hide();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

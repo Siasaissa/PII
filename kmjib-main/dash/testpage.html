@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Branches</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @media (min-width: 576px) {
+            .modal-md-custom {
+                max-width: 600px;
+            }
+        }
+        
+        /* Toast Styles */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            width: 350px;
+            max-width: calc(100% - 40px);
+            pointer-events: none;
+        }
+
+        .toast-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .custom-toast {
+            position: relative;
+            width: 100%;
+            pointer-events: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid;
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.3s ease;
+        }
+
+        .custom-toast.hide {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        .toast-success {
+            border-left-color: #198754;
+            background-color: #f8f9fa;
+        }
+
+        .toast-warning {
+            border-left-color: #ffc107;
+            background-color: #f8f9fa;
+        }
+
+        .toast-danger {
+            border-left-color: #dc3545;
+            background-color: #f8f9fa;
+        }
+
+        .toast-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+
+        .toast-body {
+            font-size: 0.95rem;
+            padding: 0.75rem;
+        }
+
+        /* Download Progress Modal */
+        #downloadProgressModal .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        #downloadProgressModal .progress-bar {
+            transition: width 0.3s ease;
+        }
+
+        #downloading-filename {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 15px;
+        }
+
+        /* Other Custom Styles */
+        .risk-header {
+            background-color: #dc3545;
+            border-radius: 0.5rem;
+        }
+
+        .section-icon {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-flush {
+            border-radius: 0.5rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        body {
+            transform: none !important;
+        }
+    </style>
+</head>
+
+<body class="body">
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+    
+    <!-- Download Progress Modal -->
+    <div class="modal fade" id="downloadProgressModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">Downloading File</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-download fs-1 text-primary"></i>
+                    </div>
+                    <p id="downloading-filename">Preparing download...</p>
+                    <div class="progress">
+                        <div id="download-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                             role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <p class="small mt-2 mb-0" id="download-progress-text">0%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container container-xxl mt-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-10 col-12">
+                <!-- Header -->
+                <div class="risk-header text-white p-4 mb-5">
+                    <div class="position-relative z-1">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap">
+                            <div class="mb-4 mb-md-0">
+                                <div class="d-flex align-items-center mb-3">
+                                    <h1 class="h2 mb-0">
+                                        <i class="bi bi-fullscreen-exit fs-2 section-icon me-3"></i>
+                                        Branches
+                                    </h1>
+                                </div>
+                                <div class="d-flex flex-wrap gap-4">
+                                    <div>
+                                        <small class="text-white-80 d-block">Reference</small>
+                                        <div class="fw-semibold fs-5">RN-2023-00428</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Client</small>
+                                        <div class="fw-semibold fs-5">SURETECH Systems Co. Ltd</div>
+                                    </div>
+                                    <div>
+                                        <small class="text-white-80 d-block">Policy Type</small>
+                                        <div class="fw-semibold fs-5">Marine Cargo</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="text-end mb-3">
+                                    <small class="text-white-80 d-block">Created</small>
+                                    <div class="fw-semibold">10-Nov-2023</div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="index.html">
+                                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                        <i class="bi bi-house me-1"></i> Dashboard
+                                    </button>
+                                    </a>
+                                    <div class="card-toolbar ms-4 d-flex align-items-center gap-1">                                       
+                                            <button class="btn btn-sm bg-danger text-white"  data-bs-toggle="modal" data-bs-target="#addBranchModal">
+                                                <i class="fas fa-plus text-white"></i> Add New Branch
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Card -->
+                <div class="card card-flush h-md-100">
+                    <div class="card-header pt-2"></div>
+                    <div class="card-body pt-6">
+                        <div class="table-responsive">
+                            <table class="table table align-items-center border-danger">
+                                <thead>
+                                    <tr class="fs-5 fw-bold text-dark border-bottom-2">
+                                        <th class="min-w-100px text-center">SNo</th>
+                                        <th class="min-w-100px text-center">Branch</th>
+                                        <th class="min-w-100px text-center">Region</th>
+                                        <th class="min-w-100px text-center">Phone</th>
+                                        <th class="min-w-100px text-center">Manager</th>
+                                        <th class="min-w-100px text-center">Status</th>
+                                        <th class="min-w-100px text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="fs-4 border-bottom-2 justify-content-center">
+                                        <td class="text-gray-600 fs-6 text-center">01</td>
+                                        <td class="text-gray-600 fs-6 text-center">Dar HQ</td>
+                                        <td class="text-gray-600 fs-6 text-center">Dar</td>
+                                        <td class="text-gray-600 fs-6 text-center">0613803662</td>
+                                        <td class="text-gray-600 fs-6 text-center">Ahmed</td>
+                                        <td class="fs-6 text-center">
+                                            <span class="badge border border-success text-success d-inline-block text-center" style="width: 80px;">
+                                                Active
+                                            </span>
+                                        </td>
+                                        <td class="text-center gap-3">
+                                            <i class="bi bi-pencil-square fs-5 me-4 cursor-pointer text-warning" data-bs-toggle="modal" data-bs-target="#editModal"></i>
+                                            <i class="bi bi-trash fs-5 text-danger ms-4 cursor-pointer" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                                style="color: #dc3545 !important;"></i>
+                                            <i class="bi bi-download fs-5 ms-4 cursor-pointer text-primary download-btn" 
+                                               data-filename="branch_data.pdf"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="editModalLabel">Edit User Info</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editForm">
+                    <div class="modal-body row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" value="Ahmed">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" value="+255712345678">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" value="Ahmed@humtech.co.tz">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">ID Type</label>
+                            <input type="text" class="form-control" value="NIDA">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">ID Number</label>
+                            <input type="text" class="form-control" value="1234567890123456">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" value="1990-06-20">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Gender</label>
+                            <select class="form-select">
+                                <option selected>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <input type="text" class="form-control" value="Company">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary text-white">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <strong>DarHq</strong>'s record? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary text-white" id="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Branch Modal -->
+    <div class="modal fade" id="addBranchModal" tabindex="-1" aria-labelledby="addBranchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="addBranchModalLabel">Add New Branch</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="addBranchForm">
+                    <div class="modal-body row g-3 px-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Branch Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Dar HQ">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Region</label>
+                            <input type="text" class="form-control" placeholder="e.g. Dar es Salaam">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input type="text" class="form-control" placeholder="e.g. 0613803662">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Manager</label>
+                            <input type="text" class="form-control" placeholder="e.g. Ahmed">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <select class="form-select">
+                                <option selected>Active</option>
+                                <option>Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer px-4">
+                        <button type="submit" class="btn btn-primary text-white">Add Branch</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable
+            $('.table').DataTable({
+                "pageLength": 3
+            });
+
+            // Handle download button clicks
+            $('.download-btn').click(function() {
+                const filename = $(this).data('filename');
+                simulateDownload(filename);
+            });
+
+            // Form submission handlers
+            $('#editForm').on('submit', function(e) {
+                e.preventDefault();
+                $('#editModal').modal('hide');
+                showNotification('Branch has been updated successfully', 'success');
+            });
+
+            $('#confirmDelete').on('click', function() {
+                $('#deleteModal').modal('hide');
+                showNotification('Branch has been deleted successfully', 'danger');
+            });
+
+            $('#addBranchForm').on('submit', function(e) {
+                e.preventDefault();
+                $('#addBranchModal').modal('hide');
+                showNotification('New branch has been added successfully', 'success');
+                this.reset();
+            });
+
+            // Download simulation function
+            function simulateDownload(filename) {
+                const modal = new bootstrap.Modal(document.getElementById('downloadProgressModal'));
+                const progressBar = $('#download-progress-bar');
+                const progressText = $('#download-progress-text');
+                const filenameElement = $('#downloading-filename');
+                
+                // Show modal and set filename
+                modal.show();
+                filenameElement.text(`Downloading: ${filename}`);
+                
+                // Simulate download progress
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.css('width', `${progress}%`);
+                    progressText.text(`${Math.round(progress)}%`);
+                    
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            modal.hide();
+                            // Trigger actual download
+                            triggerActualDownload(filename);
+                        }, 500);
+                    }
+                }, 200);
+            }
+
+            function triggerActualDownload(filename) {
+                // This is where you'd put your actual download logic
+                // For demonstration, we'll create a dummy download
+                
+                // Show completion toast
+                showNotification(`${filename} download completed`, 'success');
+                
+                // In a real app, you might do something like:
+                // window.location.href = `/download?file=${filename}`;
+            }
+
+            // Toast notification function
+            function showNotification(message, type) {
+                const toastContainer = document.getElementById('toast-container');
+                
+                // Create toast wrapper for better positioning control
+                const toastWrapper = document.createElement('div');
+                toastWrapper.className = 'toast-wrapper';
+                
+                const toast = document.createElement('div');
+                toast.className = `custom-toast toast-${type}`;
+                
+                // Set icon based on type
+                let icon = 'bi-info-circle';
+                if (type === 'success') icon = 'bi-check-circle';
+                if (type === 'danger') icon = 'bi-exclamation-triangle';
+                if (type === 'warning') icon = 'bi-exclamation-circle';
+
+                toast.innerHTML = `
+                    <div class="d-flex align-items-center px-3 py-2">
+                        <i class="bi ${icon} toast-icon text-${type}"></i>
+                        <div class="toast-body">${message}</div>
+                        <button type="button" class="btn-close ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                `;
+
+                toastWrapper.appendChild(toast);
+                toastContainer.appendChild(toastWrapper);
+
+                // Force reflow to ensure proper positioning
+                void toast.offsetHeight;
+
+                // Show toast
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+
+                // Auto-hide after delay
+                const hideDelay = 3000;
+                let hideTimeout = setTimeout(() => {
+                    hideToast(toast, toastWrapper);
+                }, hideDelay);
+
+                // Click to dismiss
+                toast.addEventListener('click', () => {
+                    clearTimeout(hideTimeout);
+                    hideToast(toast, toastWrapper);
+                });
+
+                function hideToast(toastElement, wrapperElement) {
+                    toastElement.classList.add('hide');
+                    setTimeout(() => {
+                        wrapperElement.remove();
+                        // Remove container if empty
+                        if (toastContainer.children.length === 0) {
+                            toastContainer.remove();
+                        }
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

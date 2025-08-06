@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Motor Cover Note</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 12pt;
+      line-height: 1.2;
+    }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 15mm;
+      box-sizing: border-box;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 10px;
+      border-bottom: 1px solid black;
+      padding-bottom: 5px;
+    }
+    .company-name {
+      font-weight: bold;
+      font-size: 14pt;
+      margin-bottom: 2px;
+    }
+    .company-address {
+      font-size: 9pt;
+      margin-bottom: 2px;
+    }
+    .document-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 12pt;
+      text-decoration: underline;
+      margin: 10px 0;
+    }
+    .note-numbers {
+      margin-bottom: 10px;
+    }
+    .declaration {
+      border: 1px solid black;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 10pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 5px 0;
+      font-size: 10pt;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 3px 5px;
+      vertical-align: top;
+    }
+    .certificate-title {
+      font-weight: bold;
+      margin: 5px 0;
+    }
+    .qr-instruction {
+      text-align: center;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+    .signature {
+      text-align: right;
+      margin-top: 30px;
+    }
+    .footer {
+      margin-top: 10px;
+      font-size: 8pt;
+      border-top: 1px solid black;
+      padding-top: 5px;
+    }
+    .important-note {
+      font-style: italic;
+      margin: 5px 0;
+    }
+    .bold-note {
+      font-weight: bold;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="riskNoteContent">
+    <div class="header">
+    
+    <table class="table table align-items-center border-danger" style="font-family: Geneva !important;">
+  <thead>
+    <tr class="fs-5 fw-bold text-dark border-bottom-2">
+      <th class="min-w-100px text-center">S/No</th>
+      <th class="min-w-100px text-center">Client</th>
+      <th class="min-w-100px text-center">Device ID</th>
+      <th class="min-w-100px text-center">Region</th>
+      <th class="min-w-100px text-center">Payment</th>
+      <th class="min-w-100px text-center">Date</th>
+      <th class="min-w-100px text-center">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-bottom-2">
+      <td class="text-gray-600 fs-6 text-center">01</td>
+      <td class="text-gray-600 fs-6 text-center">Ahmed Siasa</td>
+      <td class="text-gray-600 fs-6 text-center">TX03DSF</td>
+      <td class="text-gray-600 fs-6 text-center">Dar Es Salaam</td>
+      <td class="text-gray-600 fs-6 text-center">413,000.00 TZS</td>
+      <td class="text-gray-600 fs-6 text-center">18-07-2025</td>
+      <td class="text-center">
+        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
+          <i class="bi bi-check-circle-fill me-1"></i> Successful
+        </span>
+      </td>
+      <td class="text-center">
+        <div class="d-flex justify-content-center align-items-center gap-3">
+          <a href="reportFormat.html?format=word" class="text-primary" title="Export Word">
+            <i class="bi bi-file-earmark-word fs-4 me-4"></i>
+          </a>
+          <a href="reportFormat.html?format=excel" class="text-secondary" title="Export Excel">
+            <i class="bi bi-file-earmark-excel text-success fs-4"></i>
+          </a>
+          
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>  
+  </div>
+
+  <script>
+  window.onload = async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const format = urlParams.get('format'); // pdf, word, excel
+    const content = document.getElementById("riskNoteContent");
+
+    if (format === 'pdf') {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const canvas = await html2canvas(content, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      doc.save('Motor_Cover_Note.pdf');
+
+    } else if (format === 'word') {
+      const blob = new Blob(['\ufeff', content.innerHTML], {
+        type: 'application/msword'
+      });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Motor_Cover_Note.doc';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+    } else if (format === 'excel') {
+      let tableHtml = content.innerHTML;
+      const blob = new Blob([tableHtml], {
+        type: 'application/vnd.ms-excel'
+      });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'Motor_Cover_Note.xls';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+</script>
+
+</body>
+</html>
